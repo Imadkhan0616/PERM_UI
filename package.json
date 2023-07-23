@@ -1,0 +1,89 @@
+{
+  "name": "perm-dashboard",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@auth0/auth0-react": "^2.1.0",
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@fullcalendar/core": "^6.1.5",
+    "@fullcalendar/daygrid": "^6.1.4",
+    "@fullcalendar/interaction": "^6.1.5",
+    "@fullcalendar/list": "^6.1.4",
+    "@fullcalendar/react": "^6.1.5",
+    "@fullcalendar/timegrid": "^6.1.4",
+    "@material-ui/core": "^4.12.4",
+    "@mui/icons-material": "^5.11.11",
+    "@mui/material": "^5.11.14",
+    "@mui/styles": "^5.12.3",
+    "@mui/utils": "^5.12.3",
+    "@mui/x-data-grid": "^6.0.2",
+    "@nivo/bar": "^0.80.0",
+    "@nivo/core": "^0.80.0",
+    "@nivo/geo": "^0.80.0",
+    "@nivo/line": "^0.80.0",
+    "@nivo/pie": "^0.80.0",
+    "@react-pdf/renderer": "^3.1.11",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "axios": "^1.4.0",
+    "canvas": "^2.11.2",
+    "chart.js": "^3.5.1",
+    "chartjs-node-canvas": "^4.1.6",
+    "dom-to-image": "^2.6.0",
+    "formik": "^2.2.9",
+    "framer-motion": "^10.12.16",
+    "i": "^0.3.7",
+    "jspdf": "^2.5.1",
+    "jspdf-autotable": "^3.5.29",
+    "moment": "^2.29.4",
+    "npm": "^9.6.2",
+    "react": "^18.2.0",
+    "react-chartjs-2": "^5.2.0",
+    "react-dom": "^18.2.0",
+    "react-hook-form": "^7.44.3",
+    "react-icons": "^4.8.0",
+    "react-pdf": "^7.1.1",
+    "react-pro-sidebar": "^0.7.1",
+    "react-router-dom": "^6.11.2",
+    "react-scripts": "^5.0.1",
+    "react-scroll": "^1.8.9",
+    "react-select": "^5.7.4",
+    "react-to-print": "^2.14.13",
+    "react-toastify": "^9.1.3",
+    "semantic-ui-css": "^2.5.0",
+    "semantic-ui-react": "^2.1.4",
+    "styled-components": "^5.3.9",
+    "web-vitals": "^2.1.4",
+    "yup": "^1.0.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "install": "npm install --save-exact"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "gh-pages": "^5.0.0"
+  }
+}
