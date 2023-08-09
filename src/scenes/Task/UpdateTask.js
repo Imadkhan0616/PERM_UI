@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useNavigate } from "react-router";
 import { Box } from "@mui/material";
 import { colors, useTheme } from '@mui/material'
@@ -8,15 +8,20 @@ import { tokens } from "../theme";
 import Header from "../../components/Header";
 import { Button, Form, Checkbox } from 'semantic-ui-react'
 import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
-import { putAsync } from "../../helper/axiosHelper";
+import { getAsync, putAsync } from "../../helper/axiosHelper";
+import moment from "moment/moment";
+import SelectInput from '../../components/Select/SelectInput';
 
-const UpdateTask = () => {
+
+export default function UpdateTask() {
+  const { id } = useParams();
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   let navigate = useNavigate();
 
-  const [id, setId] = useState(0);
-  const [taskID, setTaskID] = useState('');
+  const [code, setCode] = useState('');
+  const [taskType, setTaskType] = useState('');
+  const [taskPriority, setPriority] = useState('');
   const [taskName, setTaskName] = useState('');
   const [taskDescription, setTaskDescription] = useState('');
   const [isActive, setIsActive] = useState('');
@@ -24,37 +29,65 @@ const UpdateTask = () => {
   const [targetCompletionDate, setTargetCompletiondate] = useState('');
   const [assignedto, setAssignedto] = useState('');
   const [assignedby, setAssignedby] = useState('');
+  const [selectedEmployee, setSelectedEmployee] = useState(null);
+  const [selectedTaskType, setTaskTypeID] = useState(null);
+  const [selectedTaskPriority, setTaskPriority] = useState(null);
+  const [selectedTaskStatus, setTaskStatus] = useState(null);
 
+  const fetchData = async () => {
+    const taskResponse = await getAsync('Tasks', { 'SearchColumn': 'taskID', 'SearchValue': id.toString() })
+      .catch((error) => {
+        console.error('Error fetching tasks data:', error);
+      });
+    const task = taskResponse.data.list[0];
+
+    console.log(task);
+    console.log(moment(task.deadline).format('MM/DD/YYYY'));
+
+    setCode(task.code);
+    // setTaskType(task.taskType);
+    // setPriority(task.taskPriority);
+    setTaskName(task.taskName);
+    setTaskDescription(task.taskDescription);
+    setIsActive(task.isActive);
+    setDeadline(moment(task.deadline).format('MM/DD/YYYY'));
+    setTargetCompletiondate(moment(task.targetCompletionDate).format('MM/DD/YYYY'));
+    // setAssignedto(task.assignedto);
+    // setAssignedby(task.assignedby);
+  };
 
   useEffect(() => {
-    setId(localStorage.getItem("id"));
-    setTaskID(localStorage.getItem("taskID", taskID));
-    setTaskName(localStorage.getItem("taskName", taskName));
-    setTaskDescription(localStorage.getItem("taskDescription", taskDescription));
-    setIsActive(localStorage.getItem("isActive", isActive));
-    setDeadline(localStorage.getItem("deadline", deadline));
-    setTargetCompletiondate(localStorage.getItem("targetCompletionDate", targetCompletionDate));
-    setAssignedto(localStorage.getItem("assignedto", assignedto));
-    setAssignedby(localStorage.getItem("assignedby", assignedby));
-
-
+    fetchData();
   }, []);
 
-  const putData = async () => {
-    await putAsync('Tasks/Update', {
-      taskID,
+  const handleEmployeeChange = (selectedValue) => {
+    setSelectedEmployee(selectedValue);
+};
+
+const handleTaskTypeChange = (selectedTaskType) =>{
+  setTaskTypeID(selectedTaskType);
+};
+
+const handleTaskPriorityChange = (selectedTaskPriority) =>{
+  setTaskPriority(selectedTaskPriority);
+};
+
+const handleTaskStatusChange = (selectedTaskStatus) =>{
+  setTaskStatus(selectedTaskStatus);
+};
+
+  const onSubmit = async () => {
+    await putAsync('Task/Update', {
+      taskID: id,
       taskName,
       taskDescription,
       isActive,
       deadline,
-      targetCompletionDate,
-      assignedby,
-      assignedto
-
+      targetCompletionDate
     }).then((response) => {
-      console.log(response.message);
-      navigate('/Tasks')
-    });
+      alert(response.message);
+      navigate('/ReadTask')
+    })
   }
 
   return (
@@ -87,15 +120,45 @@ const UpdateTask = () => {
             <label for="text">Title:</label>
             <input type="text" id="txct2"
               placeholder="Title" name="reason" sx={{ width: '20px', Height: '40px' }}
+              value={taskName}
               onChange={(e) => setTaskName(e.target.value)} />
+
+<label for="text">Task Type:</label>
+                                    <SelectInput
+                                          placeholde="Select Task Type"
+                                          apiUrl="Tasks"
+                                          valueField="paramTaskTypeID"
+                                          lableField="paramTaskTypeID"
+                                          selectedOption={selectedTaskType}
+                                          onValueChange={handleTaskTypeChange} />
+
+                                    <label for="text">Task Priority:</label>
+                                    <SelectInput
+                                          placeholde="Select Task Priority"
+                                          apiUrl="Tasks"
+                                          valueField="paramTaskPriorityID"
+                                          lableField="paramTaskPriorityID"
+                                          selectedOption={selectedTaskPriority}
+                                          onValueChange={handleTaskPriorityChange} />
+
+                                    <label for="text">Task Status:</label>
+                                    <SelectInput
+                                          placeholde="Select Task Status"
+                                          apiUrl="Tasks"
+                                          valueField="paramTaskStatusID"
+                                          lableField="paramTaskStatusID"
+                                          selectedOption={selectedTaskStatus}
+                                          onValueChange={handleTaskStatusChange} />
 
             <label for="text">Description:</label>
             <input type="text" id="txct2"
               placeholder="Description" name="reason" sx={{ width: '20px', Height: '40px' }}
+              value={taskDescription}
               onChange={(e) => setTaskDescription(e.target.value)} />
             <label for="text">Status:</label>
             <input type="checkbox" id="txct2"
               placeholder="isActive" name="reason" sx={{ width: '20px', Height: '40px' }}
+              value={isActive}
               onChange={(e) => setIsActive(e.target.value)} />
 
             {/* <label for="Type">Status</label>
@@ -117,22 +180,32 @@ const UpdateTask = () => {
             <label for="pwd">Deadline:</label>
             <input type="date" id="txt1"
               name="fromdate" required
-              onChange={(e) => setDeadline(e.target.value)} />
+              value={deadline}
+              onChange={(e) => setDeadline(e.target.value).format} />
 
             <label for="pwd">Completion Date:</label>
             <input type="date" id="txt1"
               name="fromdate"
+              value={targetCompletionDate}
               onChange={(e) => setTargetCompletiondate(e.target.value)} />
 
             <label for="text">Assigned to:</label>
-            <input type="text" id="txct2"
-              placeholder="" name="reason" sx={{ width: '20px', Height: '40px' }} required
-              onChange={(e) => setAssignedto(e.target.value)} />
+            <SelectInput
+              placeholde="Select Employee"
+              apiUrl="BusinessPartner"
+              valueField="businessPartnerID"
+              lableField="code"
+              selectedOption={selectedEmployee}
+              onValueChange={handleEmployeeChange} />
 
             <label for="text">Assigned by:</label>
-            <input type="text" id="txct2"
-              placeholder="" name="reason" sx={{ width: '20px', Height: '40px' }}
-              onChange={(e) => setAssignedby(e.target.value)} />
+            <SelectInput
+              placeholde="Select Employee"
+              apiUrl="BusinessPartner"
+              valueField="businessPartnerID"
+              lableField="code"
+              selectedOption={selectedEmployee}
+              onValueChange={handleEmployeeChange} />
 
             {/* <label for="text">Task Type Id</label>
       <input type="number" min="0" step="1" 
@@ -140,7 +213,7 @@ const UpdateTask = () => {
             onChange={(e)=>setTypeid(e.target.value)} /> */}
           </div>
           <Button
-            type="submit" color='#0a1f2e' className="btn-primary" onClick={putData}
+            type="submit" color='#0a1f2e' className="btn-primary" onClick={onSubmit}
           >Submit</Button>
 
         </Form>
@@ -151,4 +224,3 @@ const UpdateTask = () => {
   )
 
 }
-export default UpdateTask;

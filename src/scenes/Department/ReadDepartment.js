@@ -9,7 +9,9 @@ import { Link } from 'react-router-dom';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { deleteAsync, getAsync } from '../../helper/axiosHelper';
-const ReadDepartment = () => {
+import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
+
+  const ReadDepartment = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -41,12 +43,13 @@ const ReadDepartment = () => {
         alert(response.message);
         setAPIData(response.data.list);
       });
-  }
+  };
   return (
     <Box m="20px">
       <Box display="flex" justifyContent="space-between" alignItems="center" >
         <Header title="Departments" subtitle="Departments List" />
         <Box>
+          <Link to={`/CDepartment`}>
           <Button
             sx={{
               backgroundColor: colors.white[100],
@@ -54,9 +57,12 @@ const ReadDepartment = () => {
               fontSize: "14px",
               fontWeight: "bold",
               padding: "10px 20px", borderRadius: '15px', boxShadow: '1px 2px 9px #aed7f4'
-            }} href='/CDepartment'
+            }} 
           >
+            <AddCircleOutlineOutlinedIcon sx={{ mr: "10px" }} />
+
             Add Department   </Button>
+            </Link>
         </Box>
       </Box>
       <Box display="flex" justifyContent="space-between"
@@ -64,9 +70,8 @@ const ReadDepartment = () => {
         <Table singleLine>
           <Table.Header>
             <Table.Row>
-              <Table.HeaderCell>Department Id</Table.HeaderCell>
+            <Table.HeaderCell>Code</Table.HeaderCell>
               <Table.HeaderCell>Name</Table.HeaderCell>
-              <Table.HeaderCell>Code</Table.HeaderCell>
               <Table.HeaderCell>Deleted</Table.HeaderCell>
               <Table.HeaderCell>Created by</Table.HeaderCell>
               <Table.HeaderCell>Created on</Table.HeaderCell>
@@ -79,9 +84,8 @@ const ReadDepartment = () => {
               return (
 
                 <Table.Row>
-                  <Table.Cell>{data.departmentID}</Table.Cell>
-                  <Table.Cell>{data.name}</Table.Cell>
                   <Table.Cell>{data.code}</Table.Cell>
+                  <Table.Cell>{data.name}</Table.Cell>
                   <Table.Cell>{data.deleted}</Table.Cell>
                   <Table.Cell>{data.createdby}</Table.Cell>
                   <Table.Cell>{data.createdon}</Table.Cell>
@@ -90,33 +94,18 @@ const ReadDepartment = () => {
                     <Table.Cell>
                       <IconButton onClick={() => setData(data)}>
                         <EditIcon sx={{ color: colors.blue[900] }} />
-                      </IconButton>{/*
-  <Button 
-   sx={{
-    backgroundColor: colors.white[100],
-    color: colors.blue[900],
-    fontSize: "14px",
-    fontWeight: "bold",
-    padding: "10px 20px", borderRadius:'15px', boxShadow:'1px 2px 9px #aed7f4'
-  }}
-onClick={() => setData(data)}>Update</Button>*/}
+                      </IconButton>
                     </Table.Cell>
                   </Link>
+                  
                   <Table.Cell>
                     <IconButton onClick={() => onDelete(data.departmentID)}>
                       <DeleteIcon sx={{ color: colors.blue[900] }} />
-                    </IconButton>  {/*      
-   <Button  sx={{
-              backgroundColor: colors.white[100],
-              color: colors.blue[900],
-              fontSize: "14px",
-              fontWeight: "bold",
-              padding: "10px 20px", borderRadius:'15px', boxShadow:'1px 2px 9px #aed7f4'
-            }}
-          onClick={() => onDelete(data.id)}>Delete</Button>*/}
+                    </IconButton>{" "}  
+                    
                   </Table.Cell>
                 </Table.Row>
-              )
+              );
             })}
           </Table.Body></Table>
       </Box></Box>

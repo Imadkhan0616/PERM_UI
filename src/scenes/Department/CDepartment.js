@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Checkbox, Form } from 'semantic-ui-react'
+import { Link } from "react-router-dom";
 import axios from 'axios';
 import { tokens } from "../theme";
 import Header from '../../components/Header';
@@ -7,6 +8,7 @@ import { useNavigate } from "react-router";
 import { Box, useTheme } from '@mui/material'
 import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
 import { postAsync } from '../../helper/axiosHelper';
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 
 export default function CDepartment() {
   const theme = useTheme();
@@ -20,15 +22,14 @@ export default function CDepartment() {
 
   const history = useNavigate();
 
-  const postData = async () => {
-    await postAsync('Department/Add', {
-      departmentid,
-      name,
+  const onSubmit = async () => {
+    const Response = await postAsync('Department/Add', {
       code,
-    }).then((response) => {
-      console.log(response.message);
-      history('/ReadDepartment')
+      name
     });
+    alert(Response.message);
+      history('/ReadDepartment')
+    
   }
   
   return (
@@ -37,6 +38,7 @@ export default function CDepartment() {
       <Box display="flex" justifyContent="space-between"
         backgroundColor={colors.white[500]} color={colors.blue[900]}>
         <h4> <Box>
+          <Link to={`/ReadDepartment`}>
           <Button
             sx={{
               backgroundColor: colors.white[100],
@@ -45,11 +47,11 @@ export default function CDepartment() {
               fontWeight: "bold",
               padding: "10px 20px", borderRadius: '15px', boxShadow: '1px 2px 9px #aed7f4'
             }}
-            href='/ReadDepartment'
           >
-            <DownloadOutlinedIcon sx={{ mr: "10px" }} />
+            <VisibilityOutlinedIcon sx={{ mr: "10px" }} />
             Show Departments
           </Button>
+          </Link>
         </Box> <br></br>
         </h4>
       </Box>
@@ -57,19 +59,22 @@ export default function CDepartment() {
         backgroundColor={colors.white[100]} color={colors.blue[900]}  >
         <Form className="create-form">
           <div className="mb-3">
-            <label for="text">Department Id</label>
+            {/* <label for="text">Department Id</label>
             <input type="number" min="0" step="1"
               placeholder="Enter Department ID" name="departmentid" required
-              onChange={(e) => setDepartmentId(e.target.value)} />
-            <label for="text">Name</label>
-            <input type="text"
-              placeholder="" name="name" required
-              onChange={(e) => setName(e.target.value)} />
+              onChange={(e) => setDepartmentId(e.target.value)} /> */}
 
             <label for="text">Code </label>
             <input type="text"
               placeholder="Enter Department Code" name="code" required
               onChange={(e) => setCode(e.target.value)} />
+
+            <label for="text">Name</label>
+            <input type="text"
+              placeholder="" name="name" required
+              onChange={(e) => setName(e.target.value)} />
+
+            
 
             {/* <label for="text">Deleted</label>
             <input type="checkbox"
@@ -90,7 +95,7 @@ export default function CDepartment() {
           </div>
 
           <Button
-            type="submit" color='#0a1f2e' className="btn-primary" onClick={postData}
+            type="submit" color='#0a1f2e' className="btn-primary" onClick={onSubmit}
           >Submit</Button>
 
         </Form>

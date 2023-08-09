@@ -1,12 +1,13 @@
 import axios from "axios";
 
-const notAuthorizedURL = ['login'];
+const notAuthorizedURL = ['login', 'applicationparam'];
+const baseUrl = 'http://localhost:5072/api';
 
 export const getAsync = async (url, requestHeaders) => {
 
     let headers = mergeHeaders(requestHeaders, url);
 
-    const response = await axios.get(`http://localhost:5072/api/${url}`, { headers });
+    const response = await axios.get(`${baseUrl}/${url}`, { headers });
 
     return response.data;
 };
@@ -15,9 +16,7 @@ export const postAsync = async (url, requestBody, requestHeaders = null) => {
 
     let headers = mergeHeaders(requestHeaders, url);
 
-    console.log(requestBody);
-
-    const response = await axios.post(`http://localhost:5072/api/${url}`, requestBody, { headers });
+    const response = await axios.post(`${baseUrl}/${url}`, requestBody, { headers });
 
     return response.data;
 }
@@ -26,7 +25,7 @@ export const putAsync = async (url, requestBody, requestHeaders = null) => {
 
     let headers = mergeHeaders(requestHeaders, url);
 
-    const response = await axios.put(`http://localhost:5072/api/${url}`, requestBody, { headers });
+    const response = await axios.put(`${baseUrl}/${url}`, requestBody, { headers });
 
     return response.data;
 }
@@ -37,7 +36,7 @@ export const deleteAsync = async (url, requestBody, requestHeaders = null) => {
 
     const data = requestBody;
 
-    const response = await axios.delete(`http://localhost:5072/api/${url}`, {
+    const response = await axios.delete(`${baseUrl}/${url}`, {
         headers,
         data,
     });

@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import bgImg from '../assets/pm2.jpg';
 import { useForm } from 'react-hook-form';
 import { Button } from '@mui/material';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
 import { useNavigate } from 'react-router';
 import { postAsync } from './../helper/axiosHelper';
 import { isAuthenticated } from '../helper/authorizationHelper';
@@ -17,42 +15,27 @@ export default function Form() {
 
   const navigate = useNavigate();
 
-
-  // useEffect(() => {
-  //   const fetchUserData = async () => {
-  //     try {
-  //       const response = await axios.get('http://localhost:5072/api/Login');
-  //       const { username, password } = response.data;
-  //       setUsername(username);
-  //       setPassword(password);
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   };
-
-  //   fetchUserData();
-  // }, []);
-
-
-  const onSubmit = async (data) => {
-    console.log(tenantID);
+  const onSubmit = (data) => {
     try {
       localStorage.setItem('tenantID', tenantID);
-      await postAsync('Login',
+      localStorage.setItem('username', username);
+
+      postAsync('Login',
         {
           "username": username,
           "password": password
         }).then((response) => {
           alert(response.message);
-          if (response?.data !== null && response?.data?.token !== null) {
+          if (response?.code === "0000" && response?.data !== null && response?.data?.token !== null) {
             localStorage.setItem('token', response?.data?.token);
+            localStorage.setItem('menu', JSON.stringify(response?.data?.menu));
+            navigate('/dashboard');
           }
           else {
+            localStorage.setItem('tenantID', tenantID);
+            localStorage.setItem('username', username);
             localStorage.removeItem('token');
-          }
-
-          if (isAuthenticated()) {
-            navigate('/dashboard');
+            localStorage.removeItem('menu');
           }
         });
     }

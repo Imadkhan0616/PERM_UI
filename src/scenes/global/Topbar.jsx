@@ -1,5 +1,5 @@
 import { Box, IconButton, useTheme, Menu, MenuItem } from "@mui/material";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { ColorModeContext, tokens } from "../theme";
 import InputBase from "@mui/material/InputBase";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
@@ -13,10 +13,17 @@ import { Logout } from "@mui/icons-material";
 import { useAuth0 } from "@auth0/auth0-react";
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
+import GetUser from "../ApplicationUserManagement/Users/GetUser";
 
 const Topbar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const [loginID, setLoginID] = useState("");
+  const [tenantID, setTenantID] = useState("");
+  useEffect(() => {
+    setLoginID(localStorage.getItem('username'));
+    setTenantID(localStorage.getItem('tenantID'));
+  });
   const colorMode = useContext(ColorModeContext);
   const { loginWithRedirect, logout, isAuthenticated, user } = useAuth0();
 
@@ -28,6 +35,11 @@ const Topbar = () => {
 
   const handleMenuClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('menu');
   };
 
   return (
@@ -60,6 +72,7 @@ const Topbar = () => {
         </IconButton>
         <IconButton onClick={handleMenuOpen}>
           <PersonOutlinedIcon sx={{ color: colors.blue[900] }} />
+          {/* {loginID} */}
         </IconButton>
 
         <Menu
@@ -76,25 +89,22 @@ const Topbar = () => {
           }}
           PaperProps={{
             style: {
-              color:"#0a1f2e", width:"200px", borderRadius:'15px', border:'1px solid #ccc',
-              backgroundColor: "#fbfbff", 
+              color: "#0a1f2e", width: "200px", borderRadius: '15px', border: '1px solid #ccc',
+              backgroundColor: "#fbfbff",
             },
           }}
         >
-          <MenuItem component={Link} to="/Profile"  onClick={handleMenuClose}>   
-          <PersonOutlinedIcon sx={{ marginRight: 1, color: colors.blue[900] }} />My Profile</MenuItem>
-          <MenuItem component={Link} to="/Settings" 
-           onClick={handleMenuClose}>
-          <SettingsOutlinedIcon sx={{ marginRight: 1, color: colors.blue[900] }} />Settings
-</MenuItem>
-<MenuItem component={Link} to="/UserRole"
-           onClick={handleMenuClose}>
-          <AccountCircleIcon sx={{ marginRight: 1, color: colors.blue[900] }} />User Roles
-</MenuItem>
+          <MenuItem component={Link} to="/Profile" onClick={handleMenuClose}>
+            <PersonOutlinedIcon sx={{ marginRight: 1, color: colors.blue[900] }} />{loginID}</MenuItem>
+
+          <MenuItem component={Link} to="/Profile" onClick={handleMenuClose}>
+            <PersonOutlinedIcon sx={{ marginRight: 1, color: colors.blue[900] }} />{tenantID}</MenuItem>
+
           <MenuItem component={Link} to="/"
-           onClick={handleMenuClose}>
-          <Logout sx={{ marginRight: 1, color: colors.blue[900] }} />Logout
-</MenuItem>
+            onClick={handleMenuClose}>
+            <Logout sx={{ marginRight: 1, color: colors.blue[900] }} />
+            <button onClick={handleLogout}>Logout</button>
+          </MenuItem>
         </Menu>
       </Box>
     </Box>
