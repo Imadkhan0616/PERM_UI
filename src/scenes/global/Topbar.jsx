@@ -7,13 +7,14 @@ import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import CorporateFareOutlinedIcon from '@mui/icons-material/CorporateFareOutlined';
 import SearchIcon from "@mui/icons-material/Search";
 import { Logout } from "@mui/icons-material";
 import { useAuth0 } from "@auth0/auth0-react";
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
-import GetUser from "../ApplicationUserManagement/Users/GetUser";
+import { useDispatch } from "react-redux";
+var StringHelper = require('string');
 
 const Topbar = () => {
   const theme = useTheme();
@@ -42,6 +43,7 @@ const Topbar = () => {
     localStorage.removeItem('menu');
   };
 
+  const dispatch = useDispatch();
   return (
     <Box display="flex" justifyContent="space-between" p={2}>
       <Box
@@ -95,15 +97,15 @@ const Topbar = () => {
           }}
         >
           <MenuItem component={Link} to="/Profile" onClick={handleMenuClose}>
-            <PersonOutlinedIcon sx={{ marginRight: 1, color: colors.blue[900] }} />{loginID}</MenuItem>
+            <PersonOutlinedIcon sx={{ marginRight: 1, color: colors.blue[900] }} />{StringHelper(loginID).humanize().s}</MenuItem>
 
           <MenuItem component={Link} to="/Profile" onClick={handleMenuClose}>
-            <PersonOutlinedIcon sx={{ marginRight: 1, color: colors.blue[900] }} />{tenantID}</MenuItem>
+            <CorporateFareOutlinedIcon sx={{ marginRight: 1, color: colors.blue[900] }} />{StringHelper(tenantID).humanize().s}</MenuItem>
 
           <MenuItem component={Link} to="/"
             onClick={handleMenuClose}>
             <Logout sx={{ marginRight: 1, color: colors.blue[900] }} />
-            <button onClick={handleLogout}>Logout</button>
+            <div onClick={() => dispatch({ type: "logout" })}>Logout</div>
           </MenuItem>
         </Menu>
       </Box>
@@ -112,14 +114,3 @@ const Topbar = () => {
 };
 
 export default Topbar;
-
-
-{/*
-        {isAuthenticated && (
-           <li>  <p > {user.name} </p></li>
-          )}
-{isAuthenticated ? (
-        <IconButton onClick={() => logout({ returnTo: window.location.origin })}>
-        <Logout sx={{ color: colors.blue[900] }} />
-      </IconButton>) : (
-      <IconButton onClick={() => loginWithRedirect()}>*/}

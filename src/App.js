@@ -43,10 +43,16 @@ import GetUser from "../src/scenes/ApplicationUserManagement/Users/GetUser";
 import FeedbackRating from "./scenes/Feedback360/FeedbackRating";
 import KeyInsights from "../src/components/KeyInsights/KeyInsights";
 // import { RequireAuth } from './components/Auth/RequireAuth';
-import { isAuthenticated } from "./helper/authorizationHelper";
+// import { isAuthenticated } from "./helper/authorizationHelper";
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import ProtectedRoute from "./ProtectedRoute/ProtectedRoute";
 
-
+const NotAuthorized = () => {
+  return (
+    <h1 style={{ color: "red" }}>You are not Authorized</h1>
+  );
+}
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -59,6 +65,8 @@ function App() {
     setIsAuthorized(isAuthenticated);
   }, []);
 
+  const { isAuthenticated } = useSelector((state) => state.root);
+
   return (
 
     <ColorModeContext.Provider value={colorMode}>
@@ -70,50 +78,52 @@ function App() {
             {!hideNavbar && <Topbar setIsSidebar={setIsSidebar} />}
 
             <Routes>
-              <Route path="/dashboard" element={<Dashboard />} />
-              {/* <Route path="/ProfNavabar" element={<ProfNavbar/>}/>*/}
               <Route path="/" element={<Form />} />
-              <Route path="/GetEmployeeMasterData" element={<GetEmployeeMasterData />} />
-              <Route path="/Intro" element={<Intro />} />
-              <Route path="/Services" element={<Services />} />
-              { /* <Route path="/Profile" element={<Profile />} />*/}
-              <Route path="/CreateEmployeeMasterData" element={<CreateEmployeeMasterData />} />
-              <Route path="/UpdateEmployeeMasterData/:id" element={<UpdateEmployeeMasterData />}></Route>
-              <Route path="/Acreate" element={<Acreate />}></Route>
-              <Route path="/Aupdate/:id" element={<Aupdate />}></Route>
-              <Route path="/Aread" element={<Aread />}></Route>
-              <Route path="/GetMarkAttendance" element={<GetMarkAttendance />}></Route>
-              <Route path="/CreateMarkAttendance" element={<CreateMarkAttendance />}></Route>
-              <Route path="/UpdateMarkAttendance/:id" element={<UpdateMarkAttendance />}></Route>
-              <Route path="/CreateTask" element={<CreateTask />}></Route>
-              <Route path="/ReadTask" element={<ReadTask />}></Route>
-              <Route path="/UpdateTask/:id" element={<UpdateTask />}></Route>
-              <Route path="/CDepartment" element={<CDeapartment />}></Route>
-              <Route path="/ReadDepartment" element={<ReadDepartment />}></Route>
-              <Route path="/UpdateDepartment/:id" element={<UpdateDepartment />}></Route>
-              {/* <Route path="/CreatePermission" element={<CreatePermission />}></Route> */}
-              <Route path="/GetPermission" element={<GetPermission />}></Route>
-              <Route path="/UpdatePermission/:id" element={<UpdatePermission />}></Route>
+              <Route path="/NotAuthorized" element={<NotAuthorized />} />
 
-              <Route path="/calendar" element={<Calendar />} />
-              <Route path="/CreatePermission" element={<CreatePermission />}></Route>
-              <Route path="/CreateRoles" element={<CreateRoles />}></Route>
-              <Route path="/GetRole" element={<GetRole />}></Route>
-              <Route path="/UpdateRoles/:id" element={<UpdateRoles />}></Route>
+              <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} location={location} excludeUrl={["/dashboard"]} />}>
 
-              <Route path="/CreateUser" element={<CreateUser />}></Route>
-              <Route path="/UpdateUser/:id" element={<UpdateUser />}></Route>
-              <Route path="/GetUser" element={<GetUser />}></Route>
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/GetEmployeeMasterData" element={<GetEmployeeMasterData />} />
+                <Route path="/Intro" element={<Intro />} />
+                <Route path="/Services" element={<Services />} />
+                <Route path="/CreateEmployeeMasterData" element={<CreateEmployeeMasterData />} />
 
+                <Route path="/UpdateEmployeeMasterData/:id" element={<UpdateEmployeeMasterData />}></Route>
+                <Route path="/Acreate" element={<Acreate />}></Route>
+                <Route path="/Aupdate/:id" element={<Aupdate />}></Route>
+                <Route path="/Aread" element={<Aread />}></Route>
+                <Route path="/GetMarkAttendance" element={<GetMarkAttendance />}></Route>
+                <Route path="/CreateMarkAttendance" element={<CreateMarkAttendance />}></Route>
+                <Route path="/UpdateMarkAttendance/:id" element={<UpdateMarkAttendance />}></Route>
+                <Route path="/CreateTask" element={<CreateTask />}></Route>
+                <Route path="/ReadTask" element={<ReadTask />}></Route>
+                <Route path="/UpdateTask/:id" element={<UpdateTask />}></Route>
+                <Route path="/CDepartment" element={<CDeapartment />}></Route>
+                <Route path="/ReadDepartment" element={<ReadDepartment />}></Route>
+                <Route path="/UpdateDepartment/:id" element={<UpdateDepartment />}></Route>
 
-              <Route path="/bar" element={<Bar />} />
-              <Route path="/Pie" element={<Pie />} />
-              <Route path="/Line" element={<Line />} />
-              <Route path="/Bar2" element={<Bar2 />} />
-              <Route path="/FeedbackRating" element={<FeedbackRating />} />
-              <Route path="/KeyInsights" element={<KeyInsights />} />
+                <Route path="/GetPermission" element={<GetPermission />}></Route>
+                <Route path="/UpdatePermission/:id" element={<UpdatePermission />}></Route>
+
+                <Route path="/calendar" element={<Calendar />} />
+                <Route path="/CreatePermission" element={<CreatePermission />}></Route>
+                <Route path="/CreateRoles" element={<CreateRoles />}></Route>
+                <Route path="/GetRole" element={<GetRole />}></Route>
+                <Route path="/UpdateRoles/:id" element={<UpdateRoles />}></Route>
+
+                <Route path="/CreateUser" element={<CreateUser />}></Route>
+                <Route path="/UpdateUser/:id" element={<UpdateUser />}></Route>
+                <Route path="/GetUser" element={<GetUser />}></Route>
 
 
+                <Route path="/bar" element={<Bar />} />
+                <Route path="/Pie" element={<Pie />} />
+                <Route path="/Line" element={<Line />} />
+                <Route path="/Bar2" element={<Bar2 />} />
+                <Route path="/FeedbackRating" element={<FeedbackRating />} />
+                <Route path="/KeyInsights" element={<KeyInsights />} />
+              </Route>
             </Routes>
           </main>
         </div>

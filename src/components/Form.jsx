@@ -5,6 +5,7 @@ import { Button } from '@mui/material';
 import { useNavigate } from 'react-router';
 import { postAsync } from './../helper/axiosHelper';
 import { isAuthenticated } from '../helper/authorizationHelper';
+import { useDispatch } from 'react-redux';
 
 export default function Form() {
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
@@ -12,6 +13,8 @@ export default function Form() {
   const [tenantID, setTenantID] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const dispatch = useDispatch();
+
 
   const navigate = useNavigate();
 
@@ -29,6 +32,7 @@ export default function Form() {
           if (response?.code === "0000" && response?.data !== null && response?.data?.token !== null) {
             localStorage.setItem('token', response?.data?.token);
             localStorage.setItem('menu', JSON.stringify(response?.data?.menu));
+            dispatch({type: "login"});
             navigate('/dashboard');
           }
           else {

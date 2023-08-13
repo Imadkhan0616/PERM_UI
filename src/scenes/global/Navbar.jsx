@@ -114,22 +114,53 @@ const Navbar = () => {
           <Box sx={{ borderRadius: '15px', boxShadow: '1px 2px 9px #d6ebfa', color: colors.blue[900], backgroundColor: colors.white[100] }} >
             <Item
               title="Dashboard" to="/dashboard" color='#0a1f2e'
-              icon={<HomeOutlinedIcon />} selected={selected}
+              icon={getIcon("Home")} selected={selected}
               setSelected={setSelected} />
           </Box>
 
           {/* Menu item */}
-          {menu.map((item, index) => (
+          {menu && menu.map((item, index) => (
             <>
-              {item.subMenu && item.subMenu.length == 0 &&
+              <Typography
+                variant="h6"
+                color={colors.grey[300]}
+                sx={{ m: "15px 0 5px 20px" }}
+              >
+                {item.name}
+              </Typography>
+              {item.subMenu && item.subMenu.length > 0 ?
                 <>
-                  <Typography
-                    variant="h6"
-                    color={colors.grey[300]}
-                    sx={{ m: "15px 0 5px 20px" }}
-                  >
-                    {item.name}
-                  </Typography>
+                  <Box sx={{ borderRadius: '15px', boxShadow: '1px 2px 9px #d6ebfa', color: colors.blue[900], backgroundColor: colors.white[100] }}>
+                    <SubMenu
+                      key={index}
+                      title={item.name} color='#0a1f2e'
+                      icon={getIcon("People")}
+                      selected={selected} setSelected={setSelected}>
+
+                      {/* Sub menu item */}
+                      {item.subMenu && item.subMenu.length > 0 && item.subMenu.map((subItem, subIndex) => (
+                        <>
+                          <Typography sx={{ m: "25px 0 5px 20px" }}>  </Typography>
+                          <Box sx={{ borderRadius: '15px', boxShadow: '1px 2px 9px #d6ebfa', backgroundColor: colors.white[100] }}>
+                            <MenuItem
+                              key={subIndex}
+                              selected={selected}
+                              setSelected={setSelected}
+                              icon={getIcon("Account")}>
+                              <Link
+                                to={subItem.link}>{subItem.name}
+                              </Link>
+                            </MenuItem>
+                          </Box>
+                          <span></span>
+                        </>
+                      ))
+                      }
+                    </SubMenu>
+                  </Box>
+                </>
+                :
+                <>
                   <Box sx={{ borderRadius: '15px', boxShadow: '1px 2px 9px #d6ebfa', backgroundColor: colors.white[100] }}>
                     <Item
                       key={index}
@@ -141,58 +172,21 @@ const Navbar = () => {
                   </Box>
                 </>
               }
-              
-              <Box sx={{ borderRadius: '15px', boxShadow: '1px 2px 9px #d6ebfa', color: colors.blue[900], backgroundColor: colors.white[100] }}>
-                <SubMenu
-                  key={index}
-                  title={item.name} color='#0a1f2e'
-                  icon={<PeopleOutlinedIcon />}
-                  selected={selected} setSelected={setSelected}>
-
-                  {/* Sub menu item */}
-                  {item.subMenu && item.subMenu.length > 0 && item.subMenu.map((subItem, subIndex) => (
-                    <>
-                      <Typography sx={{ m: "25px 0 5px 20px" }}>  </Typography>
-                      <Box sx={{ borderRadius: '15px', boxShadow: '1px 2px 9px #d6ebfa', backgroundColor: colors.white[100] }}>
-                        <MenuItem
-                          key={subIndex}
-                          selected={selected}
-                          setSelected={setSelected}
-                          icon={<AccountCircleIcon />}>
-                          <Link
-                            to={subItem.link}>{subItem.name}
-                          </Link>
-                        </MenuItem>
-                      </Box>
-                      <span></span>
-                    </>
-                  ))
-                  }
-                </SubMenu>
-              </Box>
-             
             </>
-          ))} 
-           <Typography
-                    variant="h6"
-                    color={colors.grey[300]}
-                    sx={{ m: "15px 0 5px 20px" }}
-                  >
-                    Key Insights
-                  </Typography>
-                  <Box sx={{ borderRadius: '15px', boxShadow: '1px 2px 9px #d6ebfa', backgroundColor: colors.white[100] }}>
-                    <Item
-                      key={"view"}
-                      title={"Key Insights"}
-                      to={"/KeyInsights"}
-                      icon={<AssignmentIcon />}
-                      selected={selected}
-                      setSelected={setSelected} />
-                  </Box>
+          ))}
         </Menu>
       </ProSidebar>
-    </Box>
+    </Box >
   );
 };
+
+function getIcon(iconName) {
+  if (iconName === "Home")
+    return (<HomeOutlinedIcon />);
+  if (iconName === "People")
+    return (<PeopleOutlinedIcon />);
+  if (iconName === "Account")
+    return (<AccountCircleIcon />);
+}
 
 export default Navbar;

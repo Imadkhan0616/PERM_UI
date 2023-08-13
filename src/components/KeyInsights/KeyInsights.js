@@ -111,7 +111,7 @@ export default function KeyInsights() {
                       return (
                         <tr>
                           <td>{report.employeeName}</td>
-                          <td>{report.department}</td>
+                          <td>{report.departmentName}</td>
                           <td>{report.taskPoint}</td>
                           <td>{report.attendancePoint}</td>
                           <td>{report.ratingPoint}</td>
