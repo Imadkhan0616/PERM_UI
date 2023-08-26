@@ -93,15 +93,13 @@ const GetPermission = () => {
           style={{
             height: "550px",
             overflow: "auto",
-            width: "1140px",
+            width: "100%",
             backgroundColor: "#f4f5ff",
           }}
         >
           <Table singleLine>
             <Table.Header>
               <Table.Row>
-                {/* <Table.HeaderCell>Permission Code</Table.HeaderCell>
-                <Table.HeaderCell>User Id</Table.HeaderCell> */}
                 <Table.HeaderCell>Role</Table.HeaderCell>
                 <Table.HeaderCell>Permission</Table.HeaderCell>
                 <Table.HeaderCell>Deleted</Table.HeaderCell>

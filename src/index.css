@@ -216,3 +216,96 @@ h3 span{
   margin-left: 10px;
   transition: var(--speed);
 }
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.confetti-overlap{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: red;
+  height: 100%;
+  font-family: cursive;
+}
+
+@keyframes typewriter{
+  from{
+      width: 0%;
+  }
+  to{
+      width: 20%;
+  }
+}
+@keyframes blink{
+  from{
+      border-color: white;
+  }
+  to{
+      border-color: transparent;
+  }
+}
+
+
+
+.confetti-overlap h1{
+  font-size: 40px;
+  white-space: nowrap;
+  overflow: hidden;
+  animation: typewriter 2s steps(13) ,
+  blink 800ms steps(13);
+  border-right: 5px solid white;
+}
+
+.confetti-overlap h4{
+  font-size: 20px;
+  white-space: nowrap;
+  font-family: cursive;
+  overflow: hidden;
+  animation: typewriter 2s steps(13) ,
+  blink 800ms steps(13);
+  border-right: 5px solid white;
+  transition-delay: 10s;
+
+}
+/* .confetti-index{
+  position: absolute;
+  z-index: 3;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+} */
+
+.btn-rate{
+  padding: 10px 20px;
+   background: black;
+  color: whitesmoke;
+  border-radius: 10px;
+  border: 0px;
+  margin-top: 10px;
+  align-items: flex-end !important;
+
+}
+.btn-rate:hover{
+  background: lightgray;
+  color: black;
+  transition: 1s;
+}
+.modalStyles{
+  font-size: 15px;
+}
+.modalStyles span{
+  display: inline;
+}
+.modalStyles input{
+  padding: 5px;
+  border-radius: 10px;
+  margin-left: 15px;
+  border: 1px solid lightgrey;
+}

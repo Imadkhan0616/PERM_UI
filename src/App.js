@@ -47,6 +47,7 @@ import KeyInsights from "../src/components/KeyInsights/KeyInsights";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import ProtectedRoute from "./ProtectedRoute/ProtectedRoute";
+import AuthDashboard from "./scenes/dashboard/AuthDashboard";
 
 const NotAuthorized = () => {
   return (
@@ -80,10 +81,13 @@ function App() {
             <Routes>
               <Route path="/" element={<Form />} />
               <Route path="/NotAuthorized" element={<NotAuthorized />} />
+              
 
               <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} location={location} excludeUrl={["/dashboard"]} />}>
 
-                <Route path="/dashboard" element={<Dashboard />} />
+                {/* <Route path="/dashboard" element={<Dashboard />} /> */}
+                <Route path="/dashboard" element={<AuthDashboard />} />
+
                 <Route path="/GetEmployeeMasterData" element={<GetEmployeeMasterData />} />
                 <Route path="/Intro" element={<Intro />} />
                 <Route path="/Services" element={<Services />} />
@@ -103,8 +107,8 @@ function App() {
                 <Route path="/ReadDepartment" element={<ReadDepartment />}></Route>
                 <Route path="/UpdateDepartment/:id" element={<UpdateDepartment />}></Route>
 
-                <Route path="/GetPermission" element={<GetPermission />}></Route>
-                <Route path="/UpdatePermission/:id" element={<UpdatePermission />}></Route>
+                <Route path="/GetPermission" element={<GetPermission />}></Route> 
+                 <Route path="/UpdatePermission/:id" element={<UpdatePermission />}></Route>
 
                 <Route path="/calendar" element={<Calendar />} />
                 <Route path="/CreatePermission" element={<CreatePermission />}></Route>

@@ -4,8 +4,6 @@ import { tokens } from "../../scenes/theme";
 import { mockBarData as data } from "../../data/mockData";
 import {useState, useEffect} from "react";
 import axios from 'axios';
-import {Chart as Chartjs} from 'chart.js/auto';
-import {Line} from 'react-chartjs-2';
 
 const BarChart = ({ isDashboard = false }) => {
   const theme = useTheme();

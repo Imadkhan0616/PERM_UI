@@ -35,8 +35,14 @@ function isAuthorized(path, userMenu = []) {
         if (item.subMenu)
             isAuthorized(path, item.subMenu);
 
-        if (!isFound)
-            isFound = item.link.toLowerCase() === path.toLowerCase();
+        //        console.log(`path: ${path}, subMenu: ${JSON.stringify(item.subMenu)}, pageOption: ${JSON.stringify(item.pageOption)}`);
+
+        if (!isFound) {
+            isFound = item.link.toLowerCase() === path.toLowerCase() || item.pageOption?.some(option => path.toLowerCase().includes(option.key.toLowerCase()));
+
+            if (path.toLowerCase().includes('user') && path.toLowerCase().includes('update'))
+                console.log("menu with option found: " + isFound);
+        }
 
         if (isFound) return true;
     }

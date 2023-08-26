@@ -36,6 +36,7 @@ const Topbar = () => {
 
   const handleMenuClose = () => {
     setAnchorEl(null);
+    dispatch({ type: "logout" });
   };
 
   const handleLogout = () => {

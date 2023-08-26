@@ -88,7 +88,7 @@ const GetRole = () => {
           style={{
             height: "550px",
             overflow: "auto",
-            width: "1140px",
+            width: "100%",
             backgroundColor: "#f4f5ff",
           }}
         >

@@ -8,6 +8,10 @@ export const rootReducer = createReducer(
         },
         logout: (state) => {
             localStorage.removeItem('token');
+            localStorage.removeItem('menu');
+            localStorage.removeItem('role');
+            localStorage.removeItem('tenantID');
+            localStorage.removeItem('username');
             state.isAuthenticated = false;
         }
     }

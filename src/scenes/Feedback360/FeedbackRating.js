@@ -13,7 +13,8 @@ import { getAsync, deleteAsync, postAsync } from '../../helper/axiosHelper';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import { Feedback } from '@mui/icons-material';
 import RatingStars from "./RatingStars";
-import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined';
+import StarOutlinedIcon from '@mui/icons-material/StarOutlined';
+import '../../index.css';
 
 const FeedbackRating = () => {
 
@@ -76,23 +77,8 @@ const FeedbackRating = () => {
   return (
     <Box>
       <Box display="flex" justifyContent="space-between" alignItems="center" >
-        <Header title="Employee MasterData" subtitle="Employee Master Data" />
-        <Box>
-          <Link to={`/CreateEmployeeMasterData`}>
-            <Button
-              sx={{
-                backgroundColor: colors.white[100],
-                color: colors.blue[900],
-                fontSize: "14px",
-                fontWeight: "bold",
-                padding: "10px 20px", borderRadius: '15px', boxShadow: '1px 2px 9px #aed7f4'
-              }}
-            >
-              Create Employee
-            </Button>
-          </Link>
-
-        </Box>
+        <Header title="Employee 360 Feedback" subtitle="Feedback Rating" />
+        
       </Box>
       <Box display="flex" justifyContent="space-between"
         backgroundColor={colors.white[500]} color={colors.blue[900]}>
@@ -119,7 +105,7 @@ const FeedbackRating = () => {
                   <Table.Cell>{data.paramGender.paramKey}</Table.Cell>
                   <Table.Cell>
                     <IconButton onClick={() => handleOpen(data.businessPartnerID)}>
-                      <StarBorderOutlinedIcon sx={{ color: colors.blue[900] }} />
+                      <StarOutlinedIcon sx={{ color:'#FFC000' , fontSize: '20px'}} />
                     </IconButton>{" "}
                   </Table.Cell>
                 </Table.Row>
@@ -133,19 +119,19 @@ const FeedbackRating = () => {
         aria-labelledby="parent-modal-title"
         aria-describedby="parent-modal-description"
       >
-        <Box sx={{ ...style, width: 400 }}>
+        <Box sx={{ ...style, width: 400,  borderRadius: '10px', backgroundColor: 'white', color:'black' , border: '0px'}} className='modalStyles'>
           <h2 id="parent-modal-title">Rate Employee</h2>
           <div>
-            <label>Rating Marks</label>
-            <input type='number' min={1} max={5} value={ratingMarks} onChange={(e) => setRatingMarks(e.target.value)} />
+            <input  type='number' min={1} max={5} value={ratingMarks} onChange={(e) => setRatingMarks(e.target.value)} />
+            <RatingStars/>
           </div>
           <div>
-            <label>Comments</label>
-            <input type='text' value={comments} onChange={(e) => setComments(e.target.value)} />
+            <input placeholder='Comments' type='text' value={comments} onChange={(e) => setComments(e.target.value)} />
           </div>
           <div>
-            <button type='button' onClick={onRate}>Rate</button>
-          </div>
+            <button className='btn-rate' type='button' onClick={onRate}
+            >Rate</button>
+          </div> 
         </Box>
       </Modal>
     </Box>

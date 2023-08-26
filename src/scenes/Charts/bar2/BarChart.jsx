@@ -1,16 +1,16 @@
 import { Box } from "@mui/material";
 import Header from "../../../components/Header";
-import BarChart2 from "../../../components/Charts/BarChart2";
+import TotalAttendanceBarChart from "../../../components/Charts/Chartsjs/TotalAttendanceBarChart";
 
 const Bar2 = () => {
   return (
     <Box m="20px">
       <Header title="Attendance" subtitle="  Today's Attendance department wise" />
       <Box height="75vh">
-        <BarChart2 />
+        <TotalAttendanceBarChart />
       </Box>
     </Box>
   );
 };
 
-export default Bar2;
+export default Bar2;      

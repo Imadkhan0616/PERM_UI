@@ -47,10 +47,16 @@ const GetUser = () => {
     localStorage.setItem("createdon", createdon);
   };
 
+  const getUserRoles = (id) => {
+    const filteredList = APIData.filter(x => x.userID === id);
+    const userRoles = filteredList.flatMap(s => s.userRole);
+    const roleNames = userRoles.map(s => s.role.name);
+    return roleNames ? roleNames.join(", ") : "";
+  };
+
   const getData = () => {
     getAsync('User')
       .then((response) => {
-        console.log(response.data);
         setAPIData(response.data.list);
       });
   };
@@ -82,7 +88,7 @@ const GetUser = () => {
                 boxShadow: "1px 2px 9px #aed7f4",
               }}
             >
-                          <AddCircleOutlineOutlinedIcon sx={{ mr: "10px" }} />
+              <AddCircleOutlineOutlinedIcon sx={{ mr: "10px" }} />
 
               Add User{" "}
             </Button>
@@ -99,7 +105,7 @@ const GetUser = () => {
           style={{
             height: "550px",
             overflow: "auto",
-            width: "1140px",
+            width: "100%",
             backgroundColor: "#f4f5ff",
           }}
         >
@@ -107,15 +113,15 @@ const GetUser = () => {
             <Table.Header>
               <Table.Row>
                 <Table.HeaderCell>User ID</Table.HeaderCell>
+                <Table.HeaderCell>Login ID</Table.HeaderCell>
                 <Table.HeaderCell>FirstName</Table.HeaderCell>
                 <Table.HeaderCell>MiddleName</Table.HeaderCell>
                 <Table.HeaderCell>LastName</Table.HeaderCell>
-                <Table.HeaderCell>IsAdmin</Table.HeaderCell>
+                <Table.HeaderCell>Roles</Table.HeaderCell>
                 <Table.HeaderCell>IsActive</Table.HeaderCell>
-                <Table.HeaderCell>Deleted</Table.HeaderCell>
                 <Table.HeaderCell>Created by</Table.HeaderCell>
                 <Table.HeaderCell>Created on</Table.HeaderCell>
-                <Table.HeaderCell>Deleted</Table.HeaderCell>
+                <Table.HeaderCell>Is Deleted</Table.HeaderCell>
                 <Table.HeaderCell>Update</Table.HeaderCell>
                 <Table.HeaderCell>Delete</Table.HeaderCell>
               </Table.Row>
@@ -129,7 +135,7 @@ const GetUser = () => {
                     <Table.Cell>{data.firstName}</Table.Cell>
                     <Table.Cell>{data.middleName}</Table.Cell>
                     <Table.Cell>{data.lastName}</Table.Cell>
-                    <Table.Cell>{data.isAdmin ? 'Yes' : 'No'}</Table.Cell>
+                    <Table.Cell>{getUserRoles(data.userID)}</Table.Cell>
                     <Table.Cell>{data.isActive ? 'Yes' : 'No'}</Table.Cell>
                     <Table.Cell>{data.createdBy}</Table.Cell>
                     <Table.Cell>{data.createdOn}</Table.Cell>

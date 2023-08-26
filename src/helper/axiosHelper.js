@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const notAuthorizedURL = ['login', 'applicationparam'];
-const baseUrl = 'http://localhost:5000/api';
+const baseUrl = 'http://localhost:5072/api';
 
 export const getAsync = async (url, requestHeaders) => {
 

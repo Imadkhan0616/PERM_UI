@@ -129,6 +129,7 @@ const ReadTask = () => {
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>S.No</Table.HeaderCell>
+              <Table.HeaderCell>Code</Table.HeaderCell>
               <Table.HeaderCell>Task Type</Table.HeaderCell>
               <Table.HeaderCell>Task Priority</Table.HeaderCell>
               <Table.HeaderCell>Task Name</Table.HeaderCell>
@@ -149,8 +150,9 @@ const ReadTask = () => {
               return (
                 <Table.Row>
                   <Table.Cell>{index + 1}</Table.Cell>
+                  <Table.Cell>{data.code}</Table.Cell>
                   <Table.Cell>{data.paramTaskType?.paramKey}</Table.Cell>
-                  <Table.Cell>{data.ParamTaskPriority?.paramKey}</Table.Cell>
+                  <Table.Cell>{data.paramTaskPriority?.paramKey}</Table.Cell>
                   <Table.Cell>{data.taskName}</Table.Cell>
                   <Table.Cell>{data.paramTaskStatus?.paramKey}</Table.Cell>
                   <Table.Cell>{data.deadline}</Table.Cell>

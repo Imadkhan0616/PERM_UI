@@ -32,6 +32,7 @@ export default function Form() {
           if (response?.code === "0000" && response?.data !== null && response?.data?.token !== null) {
             localStorage.setItem('token', response?.data?.token);
             localStorage.setItem('menu', JSON.stringify(response?.data?.menu));
+            localStorage.setItem('role', JSON.stringify(response?.data?.role));
             dispatch({type: "login"});
             navigate('/dashboard');
           }
@@ -40,6 +41,7 @@ export default function Form() {
             localStorage.setItem('username', username);
             localStorage.removeItem('token');
             localStorage.removeItem('menu');
+            localStorage.removeItem('role');
           }
         });
     }

@@ -76,7 +76,7 @@ export default function UpdateUser() {
 
         if (selectedRole.length != 0) {
             userRole = selectedRole.map((item) => ({
-                roleID: item.roleID
+                roleID: item.value
             }));
         }
 
@@ -102,7 +102,7 @@ export default function UpdateUser() {
             <Box display="flex" justifyContent="space-between"
                 backgroundColor={colors.white[500]} color={colors.blue[900]}>
                 <h4> <Box>
-                    
+
                     <Link to='/GetUser'>
                         <Button
                             sx={{
@@ -118,8 +118,8 @@ export default function UpdateUser() {
                             Show User
                         </Button>
                     </Link>
-                </Box> 
-                <br></br>
+                </Box>
+                    <br></br>
                 </h4>
             </Box>
             <Box display="flex" justifyContent="space-between"
@@ -193,12 +193,12 @@ export default function UpdateUser() {
                                 lableField="name" />
                         </div>
                         <Link to={`/GetUser`}>
-                        <Button
-                            type="submit" onClick={onSubmit}
-                        >
-                            <EditIcon sx={{ mr: "10px" }} />
+                            <Button
+                                type="submit" onClick={onSubmit}
+                            >
+                                <EditIcon sx={{ mr: "10px" }} />
 
-                            Update</Button>
+                                Update</Button>
                         </Link>
 
                     </Form></div>
