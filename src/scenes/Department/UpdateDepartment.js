@@ -85,13 +85,7 @@ export default function UpdateDepartment() {
               required value={name}
               onChange={(e) => setName(e.target.value)} 
               sx={{padding: "10px"}}/>
-            <label for="text">Code </label>
-            <input type="text" 
-            value={code}
-              placeholder="Enter Department Code" 
-              name="code" required 
-              onChange={(e) => setCode(e.target.value)}
-              sx={{padding: "10px"}} />
+            
             <Button
               type="submit" onClick={updateAPIData}
             >Update</Button>

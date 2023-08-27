@@ -10,26 +10,42 @@ import BarChart from "../../components/Charts/BarChart";
 import PieChart from "../../components/Charts/PieChart";
 import BarChart2 from "../../components/Charts/BarChart2";
 import Confetti from "../Confetti_Congratulations/Confetti";
-import { useState, useEffect } from "react";
-import { useSelector } from "react-redux/es/hooks/useSelector";
-
+import BarChartEmp from "../../components/ApexCharts/BarChartEmp";
+import React, { useState, useEffect } from "react";
+import { getAsync } from "../../helper/axiosHelper";
 
 //DAR APPROACH (Dashboaring Analytics Reporting)
 const AuthDashboard = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
+    const [performanceValue, setPerformaceValue] = useState(1);
 
     const roleResponse = localStorage.getItem('role');
     const role = JSON.parse(roleResponse);
-    console.log("Current Role : ", role);
-    console.log(role.includes("Hr Role"));
-    console.log(role.includes("Admin"));
 
+    const fetchPerformanceData = async () => {
+        const businessPartnerID = localStorage.getItem('businessPartnerID');
+        const empPerformanceResponse = await getAsync('EmployeePerformance', { 'BusinessPartnerID': businessPartnerID.toString() })
+            .catch((error) => {
+                console.error('Error fetching employee performance data:', error);
+            });
+        if (empPerformanceResponse) {
+            const data = empPerformanceResponse.data[0];
+            const performance = parseInt(data?.taskPoint) + parseInt(data?.attendancePoint) + parseInt(data?.ratingPoint);
+            setPerformaceValue(performance);
+        }
+    };
+
+    useEffect(() => {
+        fetchPerformanceData();
+    }, []);
 
     return (
         <div style={{ height: '100%', overflow: 'auto', width: '100%', backgroundColor: '#f4f5ff' }}>
+
             {/*Congratulations Effect*/}
-            <Confetti />
+            {performanceValue >= 8 && <Confetti />}
+
             <Box m="20px">
                 {/*Section Header*/}
                 <Box display="flex" justifyContent="space-between" alignItems="center" >
@@ -144,6 +160,24 @@ const AuthDashboard = () => {
                                 </Box>
                             </Box>
 
+                            <Box
+                                gridColumn="span 6"
+                                gridRow="span 2"
+                                backgroundColor={colors.white[100]} boxShadow='1px 2px 9px #d6ebfa' borderRadius='25px'
+                            >
+                                <Typography
+                                    variant="h3"
+                                    fontWeight="bold"
+                                    sx={{ padding: "30px 30px 0 30px" }}
+                                    color={colors.blue[900]}
+                                >
+                                    Today's Employees Attendance
+                                </Typography>
+                                <Box height="20px" m="-20px 0 0 0">
+                                    <BarChartEmp isDashboard={true} />
+                                </Box>
+                            </Box>
+
                         </>
                     )}
 
@@ -246,8 +280,6 @@ const AuthDashboard = () => {
                     {/*individual_Employee View*/}
                     {role.includes("Employee") && (
                         <>
-
-
                             <Box
                                 gridColumn="span 6"
                                 gridRow="span 2"
@@ -270,7 +302,10 @@ const AuthDashboard = () => {
                             </Box>
 
 
+
+
                         </>)}
+
                     {/*individual_Employee end View*/}
 
                 </Box>

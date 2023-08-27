@@ -81,7 +81,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Form />} />
               <Route path="/NotAuthorized" element={<NotAuthorized />} />
-              
+
 
               <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} location={location} excludeUrl={["/dashboard"]} />}>
 
@@ -96,19 +96,19 @@ function App() {
                 <Route path="/UpdateEmployeeMasterData/:id" element={<UpdateEmployeeMasterData />}></Route>
                 <Route path="/Acreate" element={<Acreate />}></Route>
                 <Route path="/Aupdate/:id" element={<Aupdate />}></Route>
-                <Route path="/Aread" element={<Aread />}></Route>
-                <Route path="/GetMarkAttendance" element={<GetMarkAttendance />}></Route>
+                <Route path="/Aread" element={<GetMarkAttendance />}></Route>
+                <Route path="/GetMarkAttendance" element={<Aread />}></Route>
                 <Route path="/CreateMarkAttendance" element={<CreateMarkAttendance />}></Route>
                 <Route path="/UpdateMarkAttendance/:id" element={<UpdateMarkAttendance />}></Route>
                 <Route path="/CreateTask" element={<CreateTask />}></Route>
                 <Route path="/ReadTask" element={<ReadTask />}></Route>
                 <Route path="/UpdateTask/:id" element={<UpdateTask />}></Route>
-                <Route path="/CDepartment" element={<CDeapartment />}></Route>
+                <Route path="/CreateDepartment" element={<CDeapartment />}></Route>
                 <Route path="/ReadDepartment" element={<ReadDepartment />}></Route>
                 <Route path="/UpdateDepartment/:id" element={<UpdateDepartment />}></Route>
 
-                <Route path="/GetPermission" element={<GetPermission />}></Route> 
-                 <Route path="/UpdatePermission/:id" element={<UpdatePermission />}></Route>
+                <Route path="/GetPermission" element={<GetPermission />}></Route>
+                <Route path="/UpdatePermission/:id" element={<UpdatePermission />}></Route>
 
                 <Route path="/calendar" element={<Calendar />} />
                 <Route path="/CreatePermission" element={<CreatePermission />}></Route>

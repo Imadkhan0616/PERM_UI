@@ -118,12 +118,6 @@ export default function UpdateEmployeeMasterData() {
           <Form.Group widths='equal'>
             <Form.Field
               control={Input}
-              label='Employee Code'
-              placeholder='Employee Code' value={code} required
-              onChange={(e) => setcode(e.target.value)}
-            />
-            <Form.Field
-              control={Input}
               label='First Name'
               placeholder='First Name' value={firstName} required
               onChange={(e) => setFirstName(e.target.value)}

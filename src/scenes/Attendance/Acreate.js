@@ -73,11 +73,7 @@ export default function Acreate() {
         <Form className="create-form">
           <div className="mb-3">
 
-            <label for="text">Code</label>
-            <input type="number" min="0" step="1"   
-              placeholder="Code" name="attendanceRequestID" required
-              value={attendanceRequestID}
-              onChange={(e) => setAttendanceRequestID(e.target.value)} />
+           
 
           <label for="text">Employee</label>
             <SelectInput

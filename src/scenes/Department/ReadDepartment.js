@@ -49,7 +49,7 @@ import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOu
       <Box display="flex" justifyContent="space-between" alignItems="center" >
         <Header title="Departments" subtitle="Departments List" />
         <Box>
-          <Link to={`/CDepartment`}>
+          <Link to={`/CreateDepartment`}>
           <Button
             sx={{
               backgroundColor: colors.white[100],

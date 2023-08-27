@@ -5,7 +5,7 @@ import { Box, Button, IconButton, Menu, MenuItem } from "@mui/material";
 import Header from '../../components/Header'
 import { colors, useTheme } from '@mui/material'
 import { tokens } from "../theme";
-import { useNavigate } from "react-router";       
+import { useNavigate } from "react-router";
 import { Link } from 'react-router-dom';
 import EditIcon from '@mui/icons-material/Edit';
 import { deleteAsync, getAsync } from "../../helper/axiosHelper";
@@ -36,7 +36,7 @@ const GetMarkAttendance = () => {
   }, []);
 
   const setData = (data) => {
-    let { 
+    let {
       markAttendanceID,
       businessPartnerID,
       date,
@@ -44,7 +44,7 @@ const GetMarkAttendance = () => {
       shift,
       lateentry,
       earlyexit
-           } = data;
+    } = data;
     localStorage.setItem('markAttendanceID', markAttendanceID);
     localStorage.setItem('businessPartnerID', businessPartnerID);
     localStorage.setItem('date', date);
@@ -112,20 +112,20 @@ const GetMarkAttendance = () => {
               <MenuItem onClick={handleMenuClose}>Import</MenuItem>
               <MenuItem onClick={exportPdf}>Export</MenuItem>
             </Menu></Box> */}
-            <Link to={`/CreateMarkAttendance`}>
-          <Button
-            sx={{
-              backgroundColor: colors.white[100],
-              color: colors.blue[900],
-              fontSize: "14px",
-              fontWeight: "bold",
-              padding: "10px 20px", borderRadius: '15px', boxShadow: '1px 2px 9px #aed7f4'
-            }} 
-          >
-                        <HowToRegOutlinedIcon sx={{ mr: "10px" }} />
+          <Link to={`/CreateMarkAttendance`}>
+            <Button
+              sx={{
+                backgroundColor: colors.white[100],
+                color: colors.blue[900],
+                fontSize: "14px",
+                fontWeight: "bold",
+                padding: "10px 20px", borderRadius: '15px', boxShadow: '1px 2px 9px #aed7f4'
+              }}
+            >
+              <HowToRegOutlinedIcon sx={{ mr: "10px" }} />
 
-            Mark New     </Button>
-            </Link>
+              Mark New     </Button>
+          </Link>
         </Box>
       </Box>
       <Box display="flex" justifyContent="space-between"
@@ -134,13 +134,13 @@ const GetMarkAttendance = () => {
           <Table singleLine id='my-table'>
             <Table.Header>
               <Table.Row>
-                <Table.HeaderCell>Id</Table.HeaderCell>
-                <Table.HeaderCell>Employee Id</Table.HeaderCell>
+                <Table.HeaderCell>Employee</Table.HeaderCell>
                 <Table.HeaderCell>Date</Table.HeaderCell>
                 <Table.HeaderCell>Shift</Table.HeaderCell>
                 <Table.HeaderCell>Status</Table.HeaderCell>
                 <Table.HeaderCell>Late Entry</Table.HeaderCell>
                 <Table.HeaderCell>Early Exit</Table.HeaderCell>
+                <Table.HeaderCell>Emergency Exit</Table.HeaderCell>
                 <Table.HeaderCell>Update</Table.HeaderCell>
                 <Table.HeaderCell>Delete</Table.HeaderCell>
               </Table.Row>
@@ -150,13 +150,13 @@ const GetMarkAttendance = () => {
                 return (
 
                   <Table.Row>
-                    <Table.Cell>{data.markAttendanceID}</Table.Cell>
-                    <Table.Cell>{data.businessPartnerID}</Table.Cell>
+                    <Table.Cell>{data.businessPartner?.nameWithCode}</Table.Cell>
                     <Table.Cell>{data.date}</Table.Cell>
-                    <Table.Cell>{data.shift}</Table.Cell>
-                    <Table.Cell>{data.status}</Table.Cell>
-                    <Table.Cell>{data.lateentry}</Table.Cell>
-                    <Table.Cell>{data.earlyexit}</Table.Cell>
+                    <Table.Cell>{data.paramShift?.paramKey}</Table.Cell>
+                    <Table.Cell>{data.paramAttendenceStatus?.paramKey}</Table.Cell>
+                    <Table.Cell>{data.isLateEntry ? "Yes" : "No"}</Table.Cell>
+                    <Table.Cell>{data.isEarlyExit ? "Yes" : "No"}</Table.Cell>
+                    <Table.Cell>{data.isEmergencyExit ? "Yes" : "No"}</Table.Cell>
 
                     <Link to={`/UpdateMarkAttendance/${data.markAttendanceID}`}>
                       <Table.Cell>

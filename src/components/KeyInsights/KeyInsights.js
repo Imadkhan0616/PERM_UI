@@ -14,24 +14,31 @@ export default function KeyInsights() {
   const [showDiv, setShowDiv] = useState(false);
   const [businessPartnerID, setBusinessPartnerID] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState(false);
-  const [reportData, setReportData] = useState(null);
-  const [seriesData, setSeriesData] = useState(null);
-  const [labelData, setLabelData] = useState(null);
+  const [reportData, setReportData] = useState([]);
+  const [seriesData, setSeriesData] = useState([]);
+  const [labelData, setLabelData] = useState([]);
 
   const history = useNavigate();
+  let series = [];
 
   const handleEmployeeChange = (selectedEmployee) => {
     setSelectedEmployee(selectedEmployee);
 
     getAsync('EmployeePerformance', { 'BusinessPartnerID': selectedEmployee.value.toString() })
       .then((res) => {
-        let series = [];
-        series.push(res.data[0].taskPoint);
-        series.push(res.data[0].attendancePoint);
-        series.push(res.data[0].ratingPoint);
+        series = [];
 
-        setSeriesData(series);
-        
+        if (res.data && res.data?.length > 0) {
+          series.push(res.data[0]?.taskPoint);
+          series.push(res.data[0]?.attendancePoint);
+          series.push(res.data[0]?.ratingPoint);
+
+          setSeriesData(series);
+        }
+        else {
+          setSeriesData([]);
+        }
+        console.log(series);
         setLabelData(['Task Point', 'Attendance Point', 'Rating Point']);
         setReportData(res.data);
       })
@@ -93,7 +100,7 @@ export default function KeyInsights() {
           </Box>
           <br></br>
           <br></br>
-          {reportData &&
+          {seriesData.length > 0 && reportData &&
             <>
               <table className="table-stripped table-bordered">
                 <thead>

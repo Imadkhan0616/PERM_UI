@@ -12,19 +12,17 @@ import DownloadDoneOutlinedIcon from '@mui/icons-material/DownloadDoneOutlined';
 import { postAsync } from "../../helper/axiosHelper";
 import SelectInput from '../../components/Select/SelectInput';
 
-
-
 export default function CreateMarkAttendance() {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
-  const [businessPartnerID, setbusinessPartnerID] = useState('');
-  const [status, setStatus] = useState('');
-  const [shift, setShift] = useState('');
-  const [lateentry, setLateentry] = useState('');
-  const [earlyexit, setEarlyExit] = useState('');
-  const [date, setDate] = useState('');
+  const [lateentry, setLateentry] = useState(false);
+  const [earlyexit, setEarlyExit] = useState(false);
+  const [emergencyExit, setEmergencyExit] = useState(false);
+  const [date, setDate] = useState(new Date());
   const [selectedEmployee, setSelectedEmployee] = useState(null);
+  const [selectedShift, setSelectedShift] = useState(null);
+  const [selectedStatus, setSelectedStatus] = useState(null);
 
   const history = useNavigate();
 
@@ -32,21 +30,44 @@ export default function CreateMarkAttendance() {
     setSelectedEmployee(selectedValue);
   };
 
+  const handleShiftChange = (selectedValue) => {
+    setSelectedShift(selectedValue);
+  };
+
+  const handleStatusChange = (selectedValue) => {
+    setSelectedStatus(selectedValue);
+  };
+
+  const shiftDataSourceApply = (applicationParamData = []) => {
+    return applicationParamData.filter(item => item.applicationParamMasterID === 8);
+  };
+
+  const statusDataSourceApply = (applicationParamData = []) => {
+    return applicationParamData.filter(item => item.applicationParamMasterID === 7);
+  };
+
+  const hanldeDateChange = (e) => {
+    console.log(e.target.value);
+    setDate(e.target.value);
+  };
+
   const onSubmit = async () => {
 
     const markAttendanceResponse = await postAsync('MarkAttendance/Add', {
-      businessPartnerID,
+      businessPartnerID: selectedEmployee.value,
       date,
-      shift,
-      status,
-      lateentry,
-      earlyexit,
+      paramShiftID: selectedShift.value,
+      paramAttendenceStatusID: selectedStatus.value,
+      isLateEntry: lateentry,
+      isEarlyExit: earlyexit,
+      isEmergencyExit: earlyexit
     });
 
 
     alert(markAttendanceResponse.message);
-    history("/GetMarkAttendance");
+    history("/Aread");
   }
+
   return (
     <Box m="20px">
       <Header title="Employee Attendance" />
@@ -83,7 +104,7 @@ export default function CreateMarkAttendance() {
                     placeholde="Select Employee"
                     apiUrl="BusinessPartner"
                     valueField="businessPartnerID"
-                    lableField="BusinessPartner"
+                    lableField="nameWithCode"
                     selectedOption={selectedEmployee}
                     onValueChange={handleEmployeeChange} />
                 </div>
@@ -106,41 +127,62 @@ export default function CreateMarkAttendance() {
               <div style={{ display: 'flex', marginBottom: '1rem' }}>
                 <div style={{ marginRight: '1rem', width: '20%' }}>
                   <label htmlFor="shift">Shift:</label>
-                  <select id="shift" name="shift" onChange={(e) => setShift(e.target.value)}>
-                    <option value="Male">Select</option>
-                    <option value="Morning">Morning</option>
-                    <option value="Evening">Evening</option>
-                  </select>
+                  <SelectInput
+                    placeholde="Select Shift"
+                    apiUrl="ApplicationParam"
+                    valueField="applicationParamDetailID"
+                    lableField="paramKey"
+                    selectedOption={selectedShift}
+                    onDataSourceApply={shiftDataSourceApply}
+                    onValueChange={handleShiftChange} />
                 </div>
                 <div style={{ marginRight: '1rem', width: '20%' }}>
                   <label htmlFor="status">Status:</label>
-                  <select id="status" name="status" onChange={(e) => setStatus(e.target.value)}>
-                    <option value="">Select</option>
-                    <option value="Present">Present</option>
-                    <option value="Leave">Leave</option>
-                    <option value="Sick-Leave">Sick-leave</option>
-                    <option value="On-duty">On-duty</option>
-                  </select>
+                  <SelectInput
+                    placeholde="Select Status"
+                    apiUrl="ApplicationParam"
+                    valueField="applicationParamDetailID"
+                    lableField="paramKey"
+                    selectedOption={selectedStatus}
+                    onDataSourceApply={statusDataSourceApply}
+                    onValueChange={handleStatusChange} />
                 </div>
               </div>
               <div style={{ display: 'flex', marginBottom: '1rem' }}>
                 <div style={{ marginRight: '1rem', width: '20%' }}>
                   <label for="Type">Late Entry:</label>
-                  <select id="Type" name="Type" onChange={(e) => setLateentry(e.target.value)} >
-                    <option value="">Select</option>
-                    <option value="Yes">Yes</option>
-                    <option value="No">No</option>
-                  </select></div>
+                  <input
+                    type="checkbox"
+                    name="lateentry"
+                    required
+                    checked={lateentry}
+                    onChange={(e) => setLateentry(e.target.value)}
+                  />
+                </div>
                 <div style={{ marginRight: '1rem', width: '20%' }}>
                   <label for="Type">Early Exit:</label>
-                  <select id="Type" name="Type" onChange={(e) => setEarlyExit(e.target.value)} >
-                    <option value="">Select</option>
-                    <option value="Yes">Yes</option>
-                    <option value="No">No</option>
-                  </select>
-                </div></div></div>
+                  <input
+                    type="checkbox"
+                    name="earlyexit"
+                    required
+                    checked={earlyexit}
+                    onChange={(e) => setEarlyExit(e.target.value)}
+                  />
+                </div>
+                <div style={{ marginRight: '1rem', width: '20%' }}>
+                  <label for="Type">Emergency Exit:</label>
+                  <input
+                    type="checkbox"
+                    name="emergencyExit"
+                    required
+                    checked={emergencyExit}
+                    onChange={(e) => setEmergencyExit(e.target.value)}
+                  />
+                </div>
+              </div>
+            </div>
 
-            <Link to={`/GetMarkAttendance`}>
+            <Link to={`/Aread`}>
               <Button
                 type="submit"
                 color="#0a1f2e"

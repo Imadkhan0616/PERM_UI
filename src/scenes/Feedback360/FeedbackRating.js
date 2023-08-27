@@ -12,9 +12,11 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { getAsync, deleteAsync, postAsync } from '../../helper/axiosHelper';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import { Feedback } from '@mui/icons-material';
-import RatingStars from "./RatingStars";
+import FaRatingStar from "./FaRatingStar";
 import StarOutlinedIcon from '@mui/icons-material/StarOutlined';
 import '../../index.css';
+import { FaStar } from 'react-icons/fa'
+import './RatingStar.css';
 
 const FeedbackRating = () => {
 
@@ -39,8 +41,10 @@ const FeedbackRating = () => {
   const [APIData, setAPIData] = useState([]);
   const [open, setOpen] = useState(false);
   const [businessPartnerID, setBusinessPartnerID] = useState(0);
-  const [ratingMarks, setRatingMarks] = useState(1);
   const [comments, setComments] = useState('');
+  const [ratingMarks, setRatingMarks] = useState(null);
+  const [hover, setHover] = useState(null);
+
 
   useEffect(() => {
     getData()
@@ -78,7 +82,7 @@ const FeedbackRating = () => {
     <Box>
       <Box display="flex" justifyContent="space-between" alignItems="center" >
         <Header title="Employee 360 Feedback" subtitle="Feedback Rating" />
-        
+
       </Box>
       <Box display="flex" justifyContent="space-between"
         backgroundColor={colors.white[500]} color={colors.blue[900]}>
@@ -105,7 +109,7 @@ const FeedbackRating = () => {
                   <Table.Cell>{data.paramGender.paramKey}</Table.Cell>
                   <Table.Cell>
                     <IconButton onClick={() => handleOpen(data.businessPartnerID)}>
-                      <StarOutlinedIcon sx={{ color:'#FFC000' , fontSize: '20px'}} />
+                      <StarOutlinedIcon sx={{ color: '#FFC000', fontSize: '20px' }} />
                     </IconButton>{" "}
                   </Table.Cell>
                 </Table.Row>
@@ -119,11 +123,30 @@ const FeedbackRating = () => {
         aria-labelledby="parent-modal-title"
         aria-describedby="parent-modal-description"
       >
-        <Box sx={{ ...style, width: 400,  borderRadius: '10px', backgroundColor: 'white', color:'black' , border: '0px'}} className='modalStyles'>
+        <Box sx={{ ...style, width: 400, borderRadius: '10px', backgroundColor: 'white', color: 'black', border: '0px' }} className='modalStyles'>
           <h2 id="parent-modal-title">Rate Employee</h2>
           <div>
-            <input  type='number' min={1} max={5} value={ratingMarks} onChange={(e) => setRatingMarks(e.target.value)} />
-            <RatingStars/>
+            {[...Array(5)].map((star, index) => {
+              const currentRating = index + 1;
+              return (
+                <label>
+                  <input
+                    type='radio'
+                    name="rating"
+                    value={currentRating}
+                    onClick={() => setRatingMarks(currentRating)}
+                  />
+                  <FaStar
+                    className='star'
+                    size={50}
+                    color={currentRating <= (hover || ratingMarks) ? "#ffc107" : "#e4e5e9"}
+                    onMouseEnter={() => setHover(currentRating)}
+                    onMouseLeave={() => setHover(null)}
+                  />
+                </label>
+              );
+            })}
+            <p>Your rating is {ratingMarks}</p>
           </div>
           <div>
             <input placeholder='Comments' type='text' value={comments} onChange={(e) => setComments(e.target.value)} />
@@ -131,7 +154,7 @@ const FeedbackRating = () => {
           <div>
             <button className='btn-rate' type='button' onClick={onRate}
             >Rate</button>
-          </div> 
+          </div>
         </Box>
       </Modal>
     </Box>

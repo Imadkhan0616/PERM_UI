@@ -96,7 +96,7 @@ const Aread = () => {
     // doc.save("Attendance.pdf");
   };
   return (
-    <Box>
+    <Box  m="20px">
       <Box display="flex" justifyContent="space-between" alignItems="center" >
         <Header title="Employee Attendance" subtitle="Employee Attendance Requests List" />
         <Box>
@@ -145,6 +145,12 @@ const Aread = () => {
       </Box>
       <Box display="flex" justifyContent="space-between"
         backgroundColor={colors.white[500]} color={colors.blue[900]}>
+          <div style={{
+            height: "550px",
+            overflow: "auto",
+            width: "100%",
+            backgroundColor: "#f4f5ff",
+          }}>
         <Table
           singleLine id='my-table'>
           <Table.Header>
@@ -190,6 +196,7 @@ const Aread = () => {
               )
             })}
           </Table.Body></Table>
+          </div>
       </Box>
     </Box>
 

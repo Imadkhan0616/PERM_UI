@@ -128,7 +128,6 @@ const ReadTask = () => {
         <Table singleLine id='my-table'>
           <Table.Header>
             <Table.Row>
-              <Table.HeaderCell>S.No</Table.HeaderCell>
               <Table.HeaderCell>Code</Table.HeaderCell>
               <Table.HeaderCell>Task Type</Table.HeaderCell>
               <Table.HeaderCell>Task Priority</Table.HeaderCell>
@@ -149,7 +148,6 @@ const ReadTask = () => {
             {APIData.map((data, index) => {
               return (
                 <Table.Row>
-                  <Table.Cell>{index + 1}</Table.Cell>
                   <Table.Cell>{data.code}</Table.Cell>
                   <Table.Cell>{data.paramTaskType?.paramKey}</Table.Cell>
                   <Table.Cell>{data.paramTaskPriority?.paramKey}</Table.Cell>

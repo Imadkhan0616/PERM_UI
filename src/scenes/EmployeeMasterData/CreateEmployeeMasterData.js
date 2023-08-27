@@ -367,12 +367,7 @@ export default function CreateEmployee() {
 
         <Form className="create-form">
           <Form.Group widths='equal'>
-            <Form.Field
-              control={Input}
-              label='Employee Code'
-              placeholder='Employee Code' type='text' value={code}
-              onChange={(e) => setCode(e.target.value)}
-            />
+
             {/* <Form.Field
               control={Input}
               label='Employee ID'

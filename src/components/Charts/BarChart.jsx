@@ -2,8 +2,6 @@ import { useTheme, Box } from "@mui/material";
 import { ResponsiveBar } from "@nivo/bar";
 import { tokens } from "../../scenes/theme";
 import { mockBarData as data } from "../../data/mockData";
-import {useState, useEffect} from "react";
-import axios from 'axios';
 
 const BarChart = ({ isDashboard = false }) => {
   const theme = useTheme();

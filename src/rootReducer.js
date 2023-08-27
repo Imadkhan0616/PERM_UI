@@ -12,6 +12,7 @@ export const rootReducer = createReducer(
             localStorage.removeItem('role');
             localStorage.removeItem('tenantID');
             localStorage.removeItem('username');
+            localStorage.removeItem('businessPartnerID');
             state.isAuthenticated = false;
         }
     }

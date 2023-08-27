@@ -33,7 +33,8 @@ export default function Form() {
             localStorage.setItem('token', response?.data?.token);
             localStorage.setItem('menu', JSON.stringify(response?.data?.menu));
             localStorage.setItem('role', JSON.stringify(response?.data?.role));
-            dispatch({type: "login"});
+            localStorage.setItem('businessPartnerID', JSON.stringify(response?.data?.businessPartnerID));
+            dispatch({ type: "login" });
             navigate('/dashboard');
           }
           else {
@@ -42,6 +43,7 @@ export default function Form() {
             localStorage.removeItem('token');
             localStorage.removeItem('menu');
             localStorage.removeItem('role');
+            localStorage.removeItem('businessPartnerID');
           }
         });
     }

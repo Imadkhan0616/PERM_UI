@@ -101,11 +101,6 @@ export default function CreateTask() {
                         <Form className="create-form">
                               <div className="mb-3">
 
-                                    <label for="text">Code:</label>
-                                    <input type="text" id="txct2"
-                                          placeholder="Code" name="code" sx={{ width: '20px', Height: '40px' }}
-                                          onChange={(e) => setCode(e.target.value)} />
-
                                     <label for="text">Task Type:</label>
                                     <SelectInput
                                           placeholder="Select Task Type"
